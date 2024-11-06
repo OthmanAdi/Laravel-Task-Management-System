@@ -21,4 +21,9 @@ class ProjectController extends Controller
 
         return view('projects.index', compact('projects'));
     }
+
+    public function create(){}
+
+    public function store(){}
+
 }
