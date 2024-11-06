@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tasks;
-
+use App\Models\Projects;
 use Illuminate\Http\Request;
 
 
@@ -33,7 +33,8 @@ class TaskController extends Controller
 
     public function create()
     {
-        return view('tasks.create'); // gibt die Seite wo man Aufgaben erstellen kann zurück.
+        $projects = Projects::all();
+        return view('tasks.create', compact ('projects')); // gibt die Seite wo man Aufgaben erstellen kann zurück.
 
     }
 

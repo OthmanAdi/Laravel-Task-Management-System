@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\TaskController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,10 @@ class Tasks extends Model
         'project_id',
         'assigned_to',
         'created_by'
+    ];
+
+    protected $casts =[
+        'due_date' => 'datetime',
     ];
 
     // wie haengt einer task mit andere sachen zusammen
