@@ -43,5 +43,35 @@ class ProjectController extends Controller
             ->with('success', 'Projekt wurde erfolgreich erstellt!');
         }
 
+        public function edit($id)
+        {
+            $project = Projects::findOrFail($id);  // Holt Projekt anhand der ID
+        return view('projects.edit', compact('project'));
+        }
 
+        public function update(Request $request, $id) // Request-Parameter hinzufügen
+{
+    $validated = $request->validate([
+        'name' => 'required|max:255',
+        'description' => 'required',
+        'status' => 'required|in:aktiv,pausiert'
+    ]);
+
+    $project = Projects::findOrFail($id);
+    $project->update($validated);
+
+    return redirect()
+        ->route('projects.index')
+        ->with('success', 'Projekt wurde erfolgreich aktualisiert!');
+}
+
+        public function destroy($id)
+        {
+            $project = Projects::findOrFail($id);
+        $project->delete();
+
+        return redirect()
+            ->route('projects.index')
+            ->with('success', 'Projekt wurde erfolgreich gelöscht!');
+        }
 }

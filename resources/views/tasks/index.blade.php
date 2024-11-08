@@ -48,8 +48,17 @@
                                     <td class="px-6 py-4">
                                         <a href="{{ route('tasks.edit', $task) }}"
                                             class="text-blue-600 hover:text-blue-900">Bearbeiten</a>
-                                    </td>
-                                </tr>
+                                             </td>
+                                            <!-- Delete Button -->
+                                            <td>
+                                                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Sind Sie sicher, dass Sie diese Aufgabe löschen möchten?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                                                        Löschen
+                                                    </button>
+                                                </form>
+                                            </tr>
                             @endforeach
                         </tbody>
                     </table>

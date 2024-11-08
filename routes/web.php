@@ -20,16 +20,28 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
+
 // Project-Routen
-Route::get('/projects', function () {
-    return view('projects.index');
-})->name('projects.index');
+// Route::middleware(['auth', 'verified'])->group(function () {
+//     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+//     Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+//     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+// });
+
+// Project-Routen
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('projects', ProjectController::class);
+});
+Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+
+
 
 // Task Routen
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('tasks', TaskController::class);
 });
-
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
 // Profile routes
 Route::middleware('auth')->group(function () {

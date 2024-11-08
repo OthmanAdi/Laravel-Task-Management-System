@@ -63,4 +63,18 @@ class TaskController extends Controller
          ->route('tasks.index')
          ->with('success', 'aufgabe wurde erfolgreich erstellt!');
     }
+    public function destroy(Tasks $task)
+{
+    $task->delete();
+
+    return redirect()
+        ->route('tasks.index')
+        ->with('success', 'Aufgabe wurde erfolgreich gelöscht.');
+}
+public function edit($id)
+        {
+            $tasks = Tasks::findOrFail($id);
+        return view('tasks.edit', compact('tasks'));
+        }
+
 }

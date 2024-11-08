@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
+            <h2 class="text-xl font-semibold leading-tight text-gray-50">
                 {{ __('Projekte') }}
             </h2>
             <a href="{{ route('projects.create') }}"
@@ -42,6 +42,15 @@
                                     <td class="px-6 py-4">
                                         <a href="{{ route('projects.edit', $project) }}"
                                             class="text-blue-600 hover:text-blue-900">Bearbeiten</a>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Sind Sie sicher, dass Sie dieses Projekt löschen möchten?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                                                Löschen
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

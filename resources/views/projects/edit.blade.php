@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-50">
-            {{ __('Neues Projekt') }}
+            {{ __('Projekt Aktualisieren') }}
         </h2>
     </x-slot>
 
@@ -46,7 +46,7 @@
                         <div class="flex justify-end mt-6">
                             <button type="submit"
                                 class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-                                Projekt erstellen
+                                Projekt Aktualisieren
                             </button>
                         </div>
                     </form>
