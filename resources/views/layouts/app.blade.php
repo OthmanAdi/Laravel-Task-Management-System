@@ -14,6 +14,24 @@
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
+{{-- Flash Messages für Erfolg und Fehler --}}
+@if (session('success'))
+    <div class="px-4 py-3 mb-4 text-green-700 bg-green-100 border border-green-400 rounded">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="px-4 py-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
     <div class="min-h-screen flex flex-col">
         @include('layouts.navigation')
