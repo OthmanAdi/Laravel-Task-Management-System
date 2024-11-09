@@ -1,8 +1,7 @@
-<!-- resources/views/projects/index.blade.php -->
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold leading-tight text-gray-50">
+            <h2 class="text-xl font-semibold leading-tight text-white-100 dark:text-gray-200">
                 {{ __('Projekte') }}
             </h2>
             <a href="{{ route('projects.create') }}"

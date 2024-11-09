@@ -6,60 +6,35 @@ use App\Models\Projects;
 use App\Models\Tasks;
 use Illuminate\Http\Request;
 
-
 class DashboardController extends Controller
 {
-
+    // Method to show the dashboard
     public function index()
     {
-        // Anzahl der offenen Aufgaben
-        // $openTasksCount = Tasks::where('status', 'active')->count();
-        $openTasksCount = Tasks::whereIn('status', ['neu','in_bearbeitung'])->count();
-
-
-        // Anzahl der aktiven Projekte
+        // Alle Projekte mit Aufgaben abfragen
+        $openTasksCount = Tasks::whereIn('status', ['neu', 'in_bearbeitung'])->count();
         $activeProjectsCount = Projects::where('status', 'aktiv')->count();
+        $overdueTasksCount = Tasks::where('due_date', '<', now())
+            ->whereIn('status', ['neu', 'in_bearbeitung'])->count();
 
-
-
-        // Anzahl der überfälligen Aufgaben
-        $overdueTasksCount = Tasks::where('due_date' , '<', now())
-                                   ->whereIn('status',['neu', 'in_bearbeitung'])->count();
-
-
-
-        //  $projects = Projects::with('tasks')->get();
-        // $tasks = Tasks::where('assigned_to', auth()->id())->latest()->get();
-
-        // return view('dashboard', compact('projects', 'tasks'));
-
-
-
-
-        // Daten an die View übergeben
+            $tasks = Tasks::with('project', 'assignedUser')->latest()->get();
             return view('dashboard.index', [
-            'openTasksCount' => $openTasksCount,
-            'activeProjectsCount' => $activeProjectsCount,
-            'overdueTasksCount' => $overdueTasksCount
-        ]);
+                'openTasksCount' => $openTasksCount,
+                'activeProjectsCount' => $activeProjectsCount,
+                'overdueTasksCount' => $overdueTasksCount,
+                'tasks' => $tasks, // Hier die Aufgaben hinzufügen
+            ]);
     }
 
-        //Übersichtsseite
-        public function overview()
-        {
-            return view('overview');
-        }
+    // Method to show the overview page
+    public function overview()
+    {
+        return view('overview');
+    }
 
-        //Your Loggt in
-        public function loggin()
-        {
-            return view('dashboard');
-        }
-
+    // Method to show the logged-in user dashboard
+    public function loggin()
+    {
+        return view('dashboard');
+    }
 }
-
-
-
-
-
-

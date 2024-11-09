@@ -24,40 +24,32 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 });
-
-
-//Project-Routen
-// Route::middleware(['auth', 'verified'])->group(function () {
-//     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-//     Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
-//     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-//     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-//     Route::get('/projects{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
-//     Route::get('projects{id}/update', [ProjectController::class, 'update'])->name('projects.update');
-// });
-
-// Project-Routen
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('projects', ProjectController::class);
+// Routen für die Projekte (Projects)
+Route::prefix('projects')->name('projects.')->group(function () {
+    Route::get('/', [ProjectController::class, 'index'])->name('index');  // Alle Projekte anzeigen
+    Route::get('create', [ProjectController::class, 'create'])->name('create');  // Formular für neues Projekt
+    Route::post('store', [ProjectController::class, 'store'])->name('store');  // Projekt speichern
+    Route::get('{project}/edit', [ProjectController::class, 'edit'])->name('edit');  // Projekt bearbeiten
+    Route::put('{project}', [ProjectController::class, 'update'])->name('update');  // Projekt aktualisieren
+    Route::get('{project}', [ProjectController::class, 'show'])->name('show');  // Details eines Projekts
+    Route::delete('{project}', [ProjectController::class, 'destroy'])->name('destroy');  // Projekt löschen
 });
-Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
 
-
-
-
-
-
-// Task Routen
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('tasks', TaskController::class);
+// Routen für die Aufgaben (Tasks)
+Route::prefix('tasks')->name('tasks.')->group(function () {
+    Route::get('/', [TaskController::class, 'index'])->name('index');  // Alle Aufgaben anzeigen
+    Route::get('create', [TaskController::class, 'create'])->name('create');  // Formular für neue Aufgabe
+    Route::post('store', [TaskController::class, 'store'])->name('store');  // Aufgabe speichern
+    Route::get('{task}/edit', [TaskController::class, 'edit'])->name('edit');  // Aufgabe bearbeiten
+    Route::put('{task}', [TaskController::class, 'update'])->name('update');  // Aufgabe aktualisieren
+    Route::get('{task}', [TaskController::class, 'show'])->name('show');  // Details einer Aufgabe
+    Route::delete('{task}', [TaskController::class, 'destroy'])->name('destroy');  // Aufgabe löschen
 });
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
-// Profile routes
+// Profil Routen
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 require __DIR__.'/auth.php';

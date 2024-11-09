@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-50">
+        <h2 class="text-xl font-semibold leading-tight text-white-100 dark:text-gray-200">
             {{ __('Projekt Aktualisieren') }}
         </h2>
     </x-slot>

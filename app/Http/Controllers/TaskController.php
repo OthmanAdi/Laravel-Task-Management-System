@@ -25,57 +25,58 @@ class TaskController extends Controller
         $tasks = $query->with(['project', 'assignedUser'])
             ->latest()
             ->get();
-
-        $tasks =$query->latest()->get();
         return view('tasks.index', compact('tasks'));
     }
-    public function create() {
+
+    // Create-Methode
+    public function create(){
         $projects = Projects::all();
         return view('tasks.create', compact('projects'));
-
     }
 
-    public function store(Request $request) {
-        //Validierung der eingegebenen daten
-
+    // Store-Methode zum Speichern einer neuen Aufgabe
+    public function store(Request $request)
+    {
+        // Validierung der eingegebenen Daten
         $validated = $request->validate([
             'title' => 'required|max:255',
-            'description' => 'required',
+            'description' => 'nullable',  // Optional, also ohne "required"
             'status' => 'required|in:neu,in_bearbeitung',
             'priority' => 'required|in:niedrig,mittel,hoch',
             'due_date' => 'required|date',
-            'project_id' => 'required|exists:projects,id'
+            'project_id' => 'required|exists:projects,id',  // Projekt muss existieren
         ]);
 
+        // Aufgabe erstellen
         $task = Tasks::create([
             'title' => $validated['title'],
-        'description' => $validated['description'],
-        'status' => $validated['status'],
-        'priority' => $validated['priority'],
-        'due_date' => $validated['due_date'],
-        'project_id' => $validated['project_id'],
-        // Automatisch den eingeloggten Benutzer als Ersteller setzen
-        'created_by' => auth()->id(),
-        // Vorläufig den eingeloggten Benutzer auch als Bearbeiter setzen
-        'assigned_to' => auth()->id(),
-         ]);
+            'description' => $validated['description'],
+            'status' => $validated['status'],
+            'priority' => $validated['priority'],
+            'due_date' => $validated['due_date'],
+            'project_id' => $validated['project_id'],
+            'created_by' => auth()->id(),  // Aktuellen Benutzer als Ersteller setzen
+            'assigned_to' => auth()->id(), // Vorläufig denselben Benutzer als Bearbeiter setzen
+        ]);
 
-         return redirect()
-         ->route('tasks.index')
-         ->with('success', 'aufgabe wurde erfolgreich erstellt!');
+        // Nach dem Speichern weiterleiten
+        return redirect()->route('tasks.index')->with('success', 'Aufgabe wurde erfolgreich erstellt!');
     }
+
+    // Delete-Methode zum Löschen einer Aufgabe
     public function destroy(Tasks $task)
-{
-    $task->delete();
+    {
+        $task->delete();
 
-    return redirect()
-        ->route('tasks.index')
-        ->with('success', 'Aufgabe wurde erfolgreich gelöscht.');
-}
-public function edit($id)
-        {
-            $tasks = Tasks::findOrFail($id);
+        return redirect()
+            ->route('tasks.index')
+            ->with('success', 'Aufgabe wurde erfolgreich gelöscht.');
+    }
+
+    // Edit-Methode zum Bearbeiten einer Aufgabe
+    public function edit($id)
+    {
+        $tasks = Tasks::findOrFail($id);
         return view('tasks.edit', compact('tasks'));
-        }
-
+    }
 }
