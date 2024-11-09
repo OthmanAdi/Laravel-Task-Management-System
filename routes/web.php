@@ -5,34 +5,44 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // Wilkommensseite
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login-dashboard',[DashboardController::class, 'loggin'])->name('loggin');
+
 //Naviagtionsseite
 Route::middleware(['auth'])->get('/overview', [DashboardController::class, 'overview'])->name('overview');
+
 
 
 // Dashboard-Route mit Controller
 Route::middleware(['auth','verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 });
 
 
-// Project-Routen
+//Project-Routen
 // Route::middleware(['auth', 'verified'])->group(function () {
 //     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 //     Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
 //     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+//     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+//     Route::get('/projects{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+//     Route::get('projects{id}/update', [ProjectController::class, 'update'])->name('projects.update');
 // });
 
 // Project-Routen
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('projects', ProjectController::class);
 });
-Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+
+
 
 
 

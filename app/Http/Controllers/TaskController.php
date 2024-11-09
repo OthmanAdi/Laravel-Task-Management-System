@@ -12,7 +12,7 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Tasks::query();
+        $query = Tasks::with('project');
 
         // Filter basierend auf Status-Parameter
         if ($request->status === 'open') {
@@ -26,6 +26,7 @@ class TaskController extends Controller
             ->latest()
             ->get();
 
+        $tasks =$query->latest()->get();
         return view('tasks.index', compact('tasks'));
     }
     public function create() {

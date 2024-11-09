@@ -9,15 +9,19 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    {{-- Projekterstellungsformular --}}
-                    <form method="POST" action="{{ route('projects.store') }}">
+                    {{-- Projektbearbeitungsformular --}}
+                    <form method="POST" action="{{ route('projects.update', $project->id) }}">
                         @csrf
+                        @method('PUT') <!-- Fügt die PUT-Methode für das Update hinzu -->
 
                         <div class="mb-4">
                             <label for="name" class="block text-sm font-medium text-gray-700">
                                 Projektname
                             </label>
+
+                          <!-- zeigt alten Wert oder Projektnamen -->
                             <input type="text" name="name" id="name"
+                            value="{{ old('name', $project->name) }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 required>
                         </div>
@@ -28,7 +32,7 @@
                             </label>
                             <textarea name="description" id="description" rows="3"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                required></textarea>
+                                required>{{ old('description', $project->description) }}</textarea>
                         </div>
 
                         <div class="mb-4">
@@ -38,8 +42,8 @@
                             <select name="status" id="status"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 required>
-                                <option value="aktiv">Aktiv</option>
-                                <option value="pausiert">Pausiert</option>
+                                <option value="aktiv" {{ $project->status == 'aktiv' ? 'selected' : '' }}>Aktiv</option>
+                                <option value="pausiert" {{ $project->status == 'pausiert' ? 'selected' : '' }}>Pausiert</option>
                             </select>
                         </div>
 
