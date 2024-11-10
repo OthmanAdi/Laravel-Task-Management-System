@@ -26,24 +26,24 @@ Route::middleware(['auth','verified'])->group(function () {
 });
 // Routen für die Projekte (Projects)
 Route::prefix('projects')->name('projects.')->group(function () {
-    Route::get('/', [ProjectController::class, 'index'])->name('index');  // Alle Projekte anzeigen
-    Route::get('create', [ProjectController::class, 'create'])->name('create');  // Formular für neues Projekt
-    Route::post('store', [ProjectController::class, 'store'])->name('store');  // Projekt speichern
-    Route::get('{project}/edit', [ProjectController::class, 'edit'])->name('edit');  // Projekt bearbeiten
-    Route::put('{project}', [ProjectController::class, 'update'])->name('update');  // Projekt aktualisieren
-    Route::get('{project}', [ProjectController::class, 'show'])->name('show');  // Details eines Projekts
-    Route::delete('{project}', [ProjectController::class, 'destroy'])->name('destroy');  // Projekt löschen
+    Route::get('/', [ProjectController::class, 'index'])->name('index');
+    Route::get('create', [ProjectController::class, 'create'])->name('create');
+    Route::post('store', [ProjectController::class, 'store'])->name('store');
+    Route::get('{project}/edit', [ProjectController::class, 'edit'])->name('edit');
+    Route::put('{project}', [ProjectController::class, 'update'])->name('update');
+    Route::get('{project}', [ProjectController::class, 'show'])->name('show');
+    Route::delete('{project}', [ProjectController::class, 'destroy'])->name('destroy');
 });
 
 // Routen für die Aufgaben (Tasks)
 Route::prefix('tasks')->name('tasks.')->group(function () {
-    Route::get('/', [TaskController::class, 'index'])->name('index');  // Alle Aufgaben anzeigen
-    Route::get('create', [TaskController::class, 'create'])->name('create');  // Formular für neue Aufgabe
-    Route::post('store', [TaskController::class, 'store'])->name('store');  // Aufgabe speichern
-    Route::get('{task}/edit', [TaskController::class, 'edit'])->name('edit');  // Aufgabe bearbeiten
-    Route::put('{task}', [TaskController::class, 'update'])->name('update');  // Aufgabe aktualisieren
-    Route::get('{task}', [TaskController::class, 'show'])->name('show');  // Details einer Aufgabe
-    Route::delete('{task}', [TaskController::class, 'destroy'])->name('destroy');  // Aufgabe löschen
+    Route::get('/', [TaskController::class, 'index'])->name('index');
+    Route::get('create', [TaskController::class, 'create'])->name('create');
+    Route::post('store', [TaskController::class, 'store'])->name('store');
+    Route::get('{task}/edit', [TaskController::class, 'edit'])->name('edit');
+    Route::put('{task}', [TaskController::class, 'update'])->name('update');
+    Route::get('{task}', [TaskController::class, 'show'])->name('show');
+    Route::delete('{task}', [TaskController::class, 'destroy'])->name('destroy');  
 });
 
 // Profil Routen

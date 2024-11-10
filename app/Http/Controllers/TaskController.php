@@ -75,8 +75,37 @@ class TaskController extends Controller
 
     // Edit-Methode zum Bearbeiten einer Aufgabe
     public function edit($id)
-    {
-        $tasks = Tasks::findOrFail($id);
-        return view('tasks.edit', compact('tasks'));
-    }
+{
+    $task = Tasks::findOrFail($id);
+    $projects = Projects::all();
+    return view('tasks.edit', compact('task', 'projects'));
 }
+
+public function show($id)
+        {
+            $task = Tasks::findOrFail($id);
+            return view ('tasks.show',compact('task'));
+        }
+
+
+
+        public function update(Request $request, $id)
+        {
+            $validated = $request->validate([
+                'description' => 'required',
+                'status' => 'required',
+                'priority' => 'required',
+                'due_date' => 'required',
+                'project_id' => 'required',
+            ]);
+
+            $task = Tasks::findOrFail($id);
+             $task->update($validated);
+
+    return redirect()
+        ->route('tasks.show', $task->id)
+        ->with('success', 'Task wurde erfolgreich aktualisiert!');
+        }
+}
+
+

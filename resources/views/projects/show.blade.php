@@ -1,8 +1,7 @@
-<!-- resources/views/projects/show.blade.php -->
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-white-100 dark:text-gray-200">
-            {{ __('Projekt anzeigen') }}
+            {{ __('Projekt Aktualisiert') }}
         </h2>
     </x-slot>
 
