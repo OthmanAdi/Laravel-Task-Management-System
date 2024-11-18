@@ -12,10 +12,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login-dashboard',[DashboardController::class, 'loggin'])->name('loggin');
+// Route::get('/login-dashboard',[DashboardController::class, 'loggin'])->name('loggin');
 
 //Naviagtionsseite
-Route::middleware(['auth'])->get('/overview', [DashboardController::class, 'overview'])->name('overview');
+// Route::middleware(['auth'])->get('/overview', [DashboardController::class, 'overview'])->name('overview');
 
 
 
@@ -31,7 +31,7 @@ Route::prefix('projects')->name('projects.')->group(function () {
     Route::post('store', [ProjectController::class, 'store'])->name('store');
     Route::get('{project}/edit', [ProjectController::class, 'edit'])->name('edit');
     Route::put('{project}', [ProjectController::class, 'update'])->name('update');
-    Route::get('{project}', [ProjectController::class, 'show'])->name('show');
+    // Route::get('{project}', [ProjectController::class, 'show'])->name('show');
     Route::delete('{project}', [ProjectController::class, 'destroy'])->name('destroy');
 });
 
@@ -42,9 +42,13 @@ Route::prefix('tasks')->name('tasks.')->group(function () {
     Route::post('store', [TaskController::class, 'store'])->name('store');
     Route::get('{task}/edit', [TaskController::class, 'edit'])->name('edit');
     Route::put('{task}', [TaskController::class, 'update'])->name('update');
-    Route::get('{task}', [TaskController::class, 'show'])->name('show');
-    Route::delete('{task}', [TaskController::class, 'destroy'])->name('destroy');  
+    // Route::get('{task}', [TaskController::class, 'show'])->name('show');
+    Route::delete('{task}', [TaskController::class, 'destroy'])->name('destroy');
 });
+
+//Routen für Kalender
+
+
 
 // Profil Routen
 Route::middleware('auth')->group(function () {

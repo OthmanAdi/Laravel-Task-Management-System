@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\Tasks;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TaskController extends Controller
 {
@@ -78,14 +79,11 @@ class TaskController extends Controller
 {
     $task = Tasks::findOrFail($id);
     $projects = Projects::all();
+
     return view('tasks.edit', compact('task', 'projects'));
 }
 
-public function show($id)
-        {
-            $task = Tasks::findOrFail($id);
-            return view ('tasks.show',compact('task'));
-        }
+
 
 
 
@@ -103,7 +101,7 @@ public function show($id)
              $task->update($validated);
 
     return redirect()
-        ->route('tasks.show', $task->id)
+        ->route('tasks.index', $task->id)
         ->with('success', 'Task wurde erfolgreich aktualisiert!');
         }
 }

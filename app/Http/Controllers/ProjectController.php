@@ -61,7 +61,7 @@ class ProjectController extends Controller
     $project->update($validated);
 
     return redirect()
-        ->route('projects.show', $project->id)
+        ->route('projects.index', $project->id)
         ->with('success', 'Projekt wurde erfolgreich aktualisiert!');
 }
 
@@ -75,9 +75,9 @@ class ProjectController extends Controller
             ->with('success', 'Projekt wurde erfolgreich gelöscht!');
         }
 
-        public function show($id)
-        {
-            $project = Projects::findOrFail($id); //nimmt das Project anhand der ID
-            return view ('projects.show',compact('project'));
-        }
+        // public function show($id)
+        // {
+        //     $project = Projects::findOrFail($id); //nimmt das Project anhand der ID
+        //     return view ('projects.show',compact('project'));
+        // }
 }
